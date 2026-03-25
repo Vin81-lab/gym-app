@@ -13,7 +13,7 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    return "Database connected successfully!"
+    return redirect(url_for('members'))
 
 from flask import render_template, request, redirect, url_for
 from models import Member
