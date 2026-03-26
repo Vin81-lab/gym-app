@@ -35,7 +35,7 @@ pipeline {
         stage('Build Docker') {
             steps {
                 sh '''
-                export PATH=$PATH:$DOCKER_PATH
+                export PATH=/usr/local/bin:%PATH
                 docker build -t gym-app .
                 '''
             }
