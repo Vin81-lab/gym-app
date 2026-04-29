@@ -44,3 +44,26 @@ jobs:
       - name: Test App
         run: curl http://localhost:5000
 
+      # 🔹 Login to Docker Hub
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # 🔹 Build Docker Image
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/gym-app:latest .
+
+      # 🔹 Push Docker Image
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/gym-app:latest
+
+      # 🔹 Setup Kubernetes Config
+      - name: Setup Kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+
+      # 🔹 Deploy to Kubernetes
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f deployment.yaml
+          kubectl rollout restart deployment gym-app
