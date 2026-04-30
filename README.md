@@ -139,16 +139,14 @@ Jenkins is configured as a pipeline job using a `Jenkinsfile`.
 
 # 🔁 CI/CD Workflow
 
-```
-Developer → GitHub Repository
-           ↓
-   GitHub Actions (CI Pipeline)
-           ↓
-        Jenkins Pipeline
-           ↓
-      Docker Build & Validation
-```
+The pipeline is triggered on every push and pull request.
 
+Stages:
+1. Lint & Build
+2. Run Tests
+3. SonarCloud Analysis (Code Quality)
+4. Docker Image Build & Push
+5. Deploy to Kubernetes (GKE)
 ---
 
 # 🎯 Key Highlights
@@ -172,28 +170,41 @@ This project is for educational and demonstration purposes.
 
 ## 🏗️ Architecture Diagram
 
-```
-          Developer
-              │
-              ▼
+        Developer (Git Push)
+                │
+                ▼
         GitHub Repository
-              │
-      ┌───────┴────────┐
-      │                │
-      ▼                ▼
-GitHub Actions     Jenkins Server
-   (CI)           (Build & QA Gate)
-      │                │
-      │                ▼
-      │         Docker Image Build
-      │                │
-      └───────┬────────┘
-              ▼
-       Test Execution (Pytest)
-              │
-              ▼
-        Application Ready
-```
+                │
+                ▼
+        GitHub Actions (CI/CD Pipeline)
+        ┌───────────────────────────────┐
+        │ 1. Lint & Build              │
+        │ 2. Run Tests                 │
+        │ 3. SonarCloud Analysis 📊    │
+        │    - Code Quality            │
+        │    - Quality Gate            │
+        └───────────────────────────────┘
+                │
+                ▼
+        Docker Build & Push
+                │
+                ▼
+        Docker Hub (Image Registry)
+                │
+                ▼
+        Google Kubernetes Engine (GKE)
+        ┌───────────────────────────────┐
+        │ Deployment (Pods)            │
+        │ Service (LoadBalancer)       │
+        └───────────────────────────────┘
+                │
+                ▼
+        Public URL (External IP)
+                │
+                ▼
+           End Users 🌐
+
+
 #Test CI?CD pipeline
 
 #Tech Stack
@@ -220,4 +231,18 @@ kubectl apply -f service.yaml
 # Live application
 
 http://34.14.212.173:5000/members
+
+## Code Quality (SonarCloud)
+
+This project integrates SonarCloud for continuous code quality analysis.
+
+Features:
+- Static code analysis
+- Detection of bugs, vulnerabilities, and code smells
+- Maintainability and reliability ratings
+- Quality Gate enforcement (build fails if standards are not met)
+
+Dashboard:
+https://sonarcloud.io/project/overview?id=Vin81-lab_gym-app
+
 
