@@ -195,3 +195,29 @@ GitHub Actions     Jenkins Server
         Application Ready
 ```
 #Test CI?CD pipeline
+
+#Tech Stack
+
+- Python (Flask)
+- Docker
+- Kubernetes (GKE)
+- GitHub Actions
+- Docker Hub
+- Google Cloud Platform
+
+# Kubernetes depoyment
+
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+
+# CI/CD pipeline
+
+- Trigger: push / pull_request
+- Build Docker image
+- Push to Docker Hub
+- Deploy to GKE automatically
+
+# Live application
+
+http://34.14.212.173:5000/members
+
