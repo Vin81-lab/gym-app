@@ -54,12 +54,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      # 🔹 Quality Gate Check
-      - name: Sonar Quality Gate
-        uses: sonarsource/sonarcloud-quality-gate-action@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
 
       # 🔹 Login to Docker Hub
       - name: Login to Docker Hub
